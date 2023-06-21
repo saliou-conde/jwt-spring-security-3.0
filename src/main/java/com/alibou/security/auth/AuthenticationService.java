@@ -1,9 +1,6 @@
 package com.alibou.security.auth;
 
-import com.alibou.security.auth.util.AuthenticationRequest;
-import com.alibou.security.auth.util.AuthenticationResponse;
-import com.alibou.security.auth.util.RegisterRequest;
-import com.alibou.security.auth.util.RegistrationResponse;
+import com.alibou.security.auth.util.*;
 import com.alibou.security.config.JwtService;
 import com.alibou.security.user.Role;
 import com.alibou.security.user.User;
@@ -13,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +45,7 @@ public class AuthenticationService {
     );
     var user = repository.findByEmail(request.getEmail())
         .orElseThrow();
-    //var jwtToken = jwtService.generateToken(user);
+    var jwtToken = jwtService.generateToken(user);
     return AuthenticationResponse.builder()
             .firstname(user.getFirstname())
             .email(user.getEmail())
@@ -55,4 +54,10 @@ public class AuthenticationService {
             .role(user.getRole())
         .build();
   }
+
+  public List<UserResponse> getUsers() {
+    List<User> users = repository.findAll();
+    return ResponseMapper.getInstance().mapAppUserToAppUserDTO(users);
+  }
+
 }

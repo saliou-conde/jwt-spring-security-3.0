@@ -1,12 +1,11 @@
 package com.alibou.security.auth;
 
-import com.alibou.security.auth.util.AuthenticationRequest;
-import com.alibou.security.auth.util.AuthenticationResponse;
-import com.alibou.security.auth.util.RegisterRequest;
-import com.alibou.security.auth.util.RegistrationResponse;
+import com.alibou.security.auth.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -26,6 +25,11 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request) {
     return ResponseEntity.ok(service.authenticate(request));
+  }
+
+  @GetMapping("")
+  public ResponseEntity<List<UserResponse>> getUsers() {
+    return ResponseEntity.ok(service.getUsers());
   }
 
 }

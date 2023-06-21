@@ -21,12 +21,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
   private String firstname;
   private String lastname;
   @Column(unique = true, nullable = false)
   private String email;
+  @Column(nullable = false)
   private String password;
 
   @Enumerated(EnumType.STRING)
