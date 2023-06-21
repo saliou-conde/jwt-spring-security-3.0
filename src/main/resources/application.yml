@@ -1,0 +1,17 @@
+application:
+  secret: ${application.secret}
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?useSSL=false
+    username: ${datasource_username}
+    password: ${datasource_password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
